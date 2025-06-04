@@ -59,9 +59,14 @@ npx prisma generate
 npx prisma migrate dev
 ```
 
-4. Start the development server:
+4. Run seed migrations:
 ```bash
-yarn run start:dev
+yarn container:seed
+```
+
+5. Start the development server:
+```bash
+yarn start:dev
 ```
 
 ### Using Docker Compose

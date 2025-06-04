@@ -11,7 +11,7 @@ import { BlogService } from '../services';
 import { CreateBlogPostDto, CreateCommentDto } from '../dtos';
 import { BlogPost } from '@prisma/client';
 
-@Controller('api/posts')
+@Controller('posts')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 

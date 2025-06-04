@@ -21,7 +21,7 @@ RUN echo '#!/bin/sh' > /start.sh && \
     echo 'echo "Running Prisma generate..."' >> /start.sh && \
     echo 'yarn prisma generate' >> /start.sh && \
     echo 'echo "Seeding database..."' >> /start.sh && \
-    echo 'yarn seed' >> /start.sh && \
+    echo 'yarn container:seed' >> /start.sh && \
     echo 'echo "Starting application..."' >> /start.sh && \
     echo 'yarn start:dev' >> /start.sh && \
     chmod +x /start.sh
