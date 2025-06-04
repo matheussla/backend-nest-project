@@ -1,7 +1,6 @@
 /* eslint-disable no-var */
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { config } from '../../../config';
 
 @Injectable()
 export class PrismaService
@@ -33,7 +32,7 @@ declare global {
 
 const prisma = globalThis.prisma ?? prismaClientSingleton();
 
-if (config.nodeEnv !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   globalThis.prisma = prisma;
 }
 

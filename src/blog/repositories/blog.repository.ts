@@ -1,25 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../shared/database/services/prisma.service';
-import { IBlogPostWithCommentCount } from '../interfaces/IBlogPost';
 import { BlogPost, Comment } from '@prisma/client';
 
 @Injectable()
 export class BlogRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<IBlogPostWithCommentCount[]> {
-    const posts = await this.prisma.blogPost.findMany({
+  async findAll(): Promise<BlogPost[]> {
+    return this.prisma.blogPost.findMany({
       include: {
         _count: {
           select: { comments: true },
         },
       },
     });
-
-    return posts.map((post) => ({
-      ...post,
-      commentCount: post._count.comments,
-    }));
   }
 
   async findById(id: string): Promise<BlogPost | null> {

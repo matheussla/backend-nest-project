@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { BlogService } from '../services';
 import { CreateBlogPostDto, CreateCommentDto } from '../dtos';
-import { IBlogPostWithCommentCount } from '../interfaces';
 import { BlogPost } from '@prisma/client';
 
 @Controller('api/posts')
@@ -17,7 +16,7 @@ export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
   @Get()
-  async findAll(): Promise<IBlogPostWithCommentCount[]> {
+  async findAll(): Promise<BlogPost[]> {
     return this.blogService.findAll();
   }
 

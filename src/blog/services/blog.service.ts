@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BlogRepository } from '../repositories/blog.repository';
 import { CreateBlogPostDto, CreateCommentDto } from '../dtos';
-import { IBlogPostWithCommentCount } from '../interfaces';
 import { LoggerService } from '../../shared/logger/services';
 import { BlogPost } from '@prisma/client';
 
@@ -21,7 +20,7 @@ export class BlogService {
     return blogPost;
   }
 
-  async findAll(): Promise<IBlogPostWithCommentCount[]> {
+  async findAll(): Promise<BlogPost[]> {
     this.logger.log('Fetching all blog posts', 'BlogService');
     return this.blogRepository.findAll();
   }
