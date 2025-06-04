@@ -1,73 +1,141 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Blog API with NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A RESTful API for a blog system built with NestJS, PostgreSQL, and Prisma.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- Blog post management (CRUD operations)
+- Comment system
+- PostgreSQL database with Prisma ORM
+- Docker support
+- Structured logging
+- Environment configuration
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Prerequisites
 
-## Installation
+- Node.js (v20 or later)
+- PostgreSQL (v16 or later)
+- Docker and Docker Compose (for containerized setup)
+- yarn or yarn
 
+## 🛠️ Installation
+
+1. Clone the repository:
 ```bash
-$ yarn install
+git clone git@github.com:matheussla/backend-nest-project.git
+cd backend-nest-project
 ```
 
-## Running the app
-
+2. Install dependencies:
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+yarn install
 ```
 
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+3. Create a `.env` file in the root directory:
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/blog_db"
+NODE_ENV="development"
 ```
 
-## Support
+## 🏃‍♂️ Running the Project
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Local Development
 
-## Stay in touch
+1. Start PostgreSQL:
+```bash
+# Using Docker
+docker run --name blog_postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=blog_db -p 5432:5432 -d postgres:16-alpine
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Or using your local PostgreSQL installation
+```
 
-## License
+2. Run database migrations:
+```bash
+npx prisma generate
+```
 
-Nest is [MIT licensed](LICENSE).
+3. Run database migrations:
+```bash
+npx prisma migrate dev
+```
+
+4. Start the development server:
+```bash
+yarn run start:dev
+```
+
+### Using Docker Compose
+
+1. Build and start all services:
+```bash
+docker-compose up --build
+```
+
+2. To run only specific services:
+```bash
+docker-compose up postgres  # Only database
+docker-compose up app      # Only application
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── blog/                    # Blog feature module
+│   ├── controllers/        # API endpoints
+│   ├── dtos/              # Data transfer objects
+│   ├── repositories/      # Database operations
+│   └── services/         # Business logic
+├── shared/                # Shared resources
+│   ├── database/         # Database configuration
+│   │   ├── seeds/       # Database seeders
+│   │   └── services/    # Database services
+│   └── logger/          # Logging configuration
+└── main.ts              # Application entry point
+```
+
+## 📝 API Endpoints
+
+- `GET /api/posts` - List all blog posts with comment counts
+- `POST /api/posts` - Create a new blog post
+- `GET /api/posts/{id}` - Get a specific blog post with comments
+- `POST /api/posts/{id}/comments` - Add a comment to a blog post
+
+## 🔜 Next Steps
+
+### 1. Testing
+- [ ] Unit tests with Jest
+- [ ] Integration tests
+- [ ] E2E tests
+- [ ] Test coverage reporting
+
+### 2. Code Quality
+- [ ] Set up Husky for pre-commit hooks
+- [ ] Add commitlint for conventional commits
+
+### 3. Documentation
+- [ ] Add Swagger/OpenAPI documentation
+- [ ] Add API documentation
+
+### 4. Authentication & Authorization
+- [ ] Implement JWT authentication
+- [ ] Add user management
+- [ ] Add password hashing
+
+### 5. CI/CD Pipeline
+- [ ] Set up GitHub Actions
+- [ ] Add automated testing
+- [ ] Add automated deployment
+- [ ] Add environment-specific configurations
+
+### 6. Monitoring & Logging
+- [ ] Add health check endpoints
+- [ ] Add request tracing
+
+### 7. Performance
+- [ ] Add caching layer
+- [ ] Implement rate limiting
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
